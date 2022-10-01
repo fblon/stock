@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StockSearchComponent } from './stock-tracker/stock-tracker.component';
+import { StockTrackerComponent } from './stock-tracker/stock-tracker.component';
 
 const routes: Routes = [
-  { path: '', component: StockSearchComponent },
+  { path: '', component: StockTrackerComponent },
 ];
 
 @NgModule({
