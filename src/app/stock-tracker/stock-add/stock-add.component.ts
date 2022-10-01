@@ -1,33 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { StockTrackerStorageService } from '../stock-tracker-storage.service';
 
 @Component({
   selector: 'app-stock-add',
   template: `
-  <form #trackerForm="ngForm">
-    <div class="form-group">
-      <div>Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</div>
-      <span>
-        <input 
-          required
-          type="text" 
-          class="form-control" 
-          id="stockInput"
-          name="stockInput"
-          [(ngModel)]="stockInput"></span>
-      <span>
-        <button 
-          type="button" 
-          class="btn btn-default"
-          id="trackBtn"
-          (click)="trackStock()"
-          [disabled]="!trackerForm.form.valid">Track Stock</button>
-      </span>
+    <div class="container border">
+      <br>
+      <form #trackerForm="ngForm">
+        <div>Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</div>
+        <br>
+        <div class="form-group col-md-3">
+          <table class="table">
+            <tr>
+              <td>
+                <input 
+                  required
+                  type="text" 
+                  class="form-control" 
+                  id="stockInput"
+                  name="stockInput"
+                  [(ngModel)]="stockInput"></td>
+              <td>
+                <button 
+                  type="button" 
+                  class="btn"
+                  id="trackBtn"
+                  (click)="trackStock()"
+                  [disabled]="!trackerForm.form.valid">Track Stock</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </form>
+      <br>
     </div>
-  </form>  
 `,
 })
 export class StockAddComponent implements OnInit {
+  @Output() addStockSymbol = new EventEmitter<string>();
 
   stockInput: string = '';
 
@@ -37,10 +47,9 @@ export class StockAddComponent implements OnInit {
   }
 
   trackStock(): void {
-    this.storageService.saveSymbol(this.stockInput);
-
-    console.log(this.storageService.getAllSymbols());
-
+    if (this.storageService.addStockSymbol(this.stockInput)) {
+      this.addStockSymbol.emit(this.stockInput);
+    }
   }
 
 }

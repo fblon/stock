@@ -9,18 +9,33 @@ export class StockTrackerStorageService {
 
   constructor() { }
 
-  getAllSymbols() : string[] {
+  addStockSymbol(symbol: string): boolean {
+    const allSymbols = this.getAllStockSymbols();
+    const existing = allSymbols.includes(symbol); 
+
+    if (!existing) {
+      allSymbols.push(symbol);
+    }
+
+    this.saveAllStockSymbols(allSymbols);
+
+    console.log(allSymbols);
+    return !existing;
+  }
+
+  deleteStockSymbol(symbol: string): void {
+    let allSymbols = this.getAllStockSymbols();
+    allSymbols = allSymbols.filter(s => s !== symbol);
+
+    this.saveAllStockSymbols(allSymbols);
+  }
+
+  private getAllStockSymbols(): string[] {
     const jsonStorage = localStorage.getItem(StockTrackerStorageService.storageKey);
     return jsonStorage ? JSON.parse(jsonStorage) : [];
   }
 
-  saveSymbol(stockSymbol: string): void {
-    const symbols = this.getAllSymbols();
-
-    if (!symbols.includes(stockSymbol)) {
-      symbols.push(stockSymbol);
-    }
-
+  private saveAllStockSymbols(symbols: string[]) {
     const jsonSymbols = JSON.stringify(symbols);
     localStorage.setItem(StockTrackerStorageService.storageKey, jsonSymbols);
   }
