@@ -10,9 +10,6 @@ import { StockListComponent } from './stock-tracker/stock-list/stock-list.compon
 import { StockSummaryComponent } from './stock-tracker/stock-list/stock-summary.component';
 import { SharedModule } from './shared/shared.module';
 
-// TODO: one module for stock-tracker
-// TODO: one module for stock-sentiment
-
 @NgModule({
   declarations: [
     AppComponent,

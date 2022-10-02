@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '', component: StockTrackerComponent },
   {
     path: 'sentiment',
-    loadChildren: () => import('./stock-sentiment/stock-sentiment.module').then(m => m.StockSentimentModule)
+    loadChildren: () => import('./insider-sentiment/insider-sentiment.module').then(m => m.InsiderSentimentModule)
   }
 ];
 

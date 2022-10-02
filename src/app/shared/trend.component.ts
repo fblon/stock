@@ -7,9 +7,7 @@ import { Component, Input } from '@angular/core';
       <span *ngIf="percentage > 0" class="text-success">🢁</span>
       <span *ngIf="percentage < 0" class="text-danger">🢃</span>
     </h1>
-`,
-  styles: [
-  ]
+`
 })
 export class TrendComponent {
   @Input() percentage!: number;

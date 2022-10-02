@@ -66,7 +66,6 @@ export class StockSearchComponent {
           return;
         }
 
-        this.storageService.addStockSymbol(stock.symbol);
         this.addStockEvent.emit(stock);
 
         this.stockInput = '';

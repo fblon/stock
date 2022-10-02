@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Stock } from '../stock';
 
-// TODO: add HTML Id to the x button
 @Component({
   selector: 'app-stock-summary',
   template: `
@@ -24,7 +23,7 @@ import { Stock } from '../stock';
               <tr>
                 <td>
                   <span>Change today: </span>
-                  <span>{{ stock.percentChange | percent:'1.0-2' }}</span>
+                  <span>{{ stock.percentChange > 0 ? '+' : '' }}{{ stock.percentChange | percent:'1.0-2' }}</span>
                 </td>
                 <td>
                   <span>Opening price: </span>
@@ -49,7 +48,7 @@ import { Stock } from '../stock';
         </tr>
         <tr>
           <a [routerLink]="['sentiment', stock.symbol]"
-          class="btn btn-outline-secondary"
+            class="btn btn-outline-secondary"
                 id="sentiment{{ stock.symbol }}">
                 Go to social sentiment detais >
           </a>
