@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { concatMap, filter, map, Observable } from 'rxjs';
+import { concatMap, defaultIfEmpty, filter, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class FinnhubService {
 
   constructor(private http: HttpClient) { }
 
-  getDescription(symbol: string): Observable<string> {
+  getDescription(symbol: string): Observable<string | undefined> {
     let url = `${this.baseUrl}/${this.apiRoutes.symbolSearch}`;
     let params: HttpParams = this.makeHttpParams();
     params = params.set('q', symbol);
@@ -26,7 +26,8 @@ export class FinnhubService {
         map(o => o.result),
         concatMap(x => x),
         filter(o => o.symbol === symbol),
-        map(o => o.description));
+        map(o => o.description),
+        defaultIfEmpty(undefined));
   }
 
   private makeHttpParams(): HttpParams {

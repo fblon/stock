@@ -14,14 +14,16 @@ export class StockService {
 
     return this.finnhubService.getDescription(symbol)
       .pipe(
-        map(desc => ({
-          symbol: symbol,
-          description: desc,
-          currentPrice: 1562,
-          openingPriceOfTheDay: 1400,
-          highPriceOfTheDay: 1750,
-          percentChange: 5.6,
-        }))
+        map(desc => {
+          return !!desc ? {
+            symbol: symbol,
+            description: desc,
+            currentPrice: 1562,
+            openingPriceOfTheDay: 1400,
+            highPriceOfTheDay: 1750,
+            percentChange: 5.6,
+          } : undefined;
+        })
     );
   }
 
