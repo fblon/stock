@@ -4,7 +4,7 @@ export interface MonthSentiment {
   mspr: number;
 }
 
-export interface Sentiment {
+export interface SentimentDetails {
   symbol: string;
   description: string;
   currentMonthSentiment: MonthSentiment;

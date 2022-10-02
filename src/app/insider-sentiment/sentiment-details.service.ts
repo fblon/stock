@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable } from 'rxjs';
 import { FinnhubService, MonthInsiderSentiment } from '../shared/finnhub.service';
-import { MonthSentiment, Sentiment } from './sentiment';
+import { MonthSentiment, SentimentDetails } from './sentiment-details';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SentimentService {
+export class SentimentDetailsService {
 
   constructor(private finnhubService: FinnhubService) { }
 
-  getSentiment(symbol: string): Observable<Sentiment | undefined> {
+  getSentiment(symbol: string): Observable<SentimentDetails | undefined> {
     const today = this.getDate();
     const oneMonthAgo = this.getDate(1);
     const twoMonthsAgo = this.getDate(2);
