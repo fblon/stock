@@ -1,8 +1,8 @@
 export interface Stock {
-  name: string;
+  symbol: string;
+  description: string;
   currentPrice: number;
   percentChange: number;
-  percentChangeSign: '+' | '-';
   highPriceOfTheDay: number;
   openingPriceOfTheDay: number;
 }

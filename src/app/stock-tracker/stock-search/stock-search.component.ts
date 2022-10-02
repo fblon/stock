@@ -1,8 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Stock } from '../stock';
 import { StockTrackerStorageService } from '../stock-tracker-storage.service';
+import { StockService } from '../stock.service';
 
 @Component({
-  selector: 'app-stock-add',
+  selector: 'app-stock-search',
   template: `
     <div class="container border">
       <br>
@@ -36,20 +38,32 @@ import { StockTrackerStorageService } from '../stock-tracker-storage.service';
     </div>
 `,
 })
-export class StockAddComponent implements OnInit {
-  @Output() addStockSymbol = new EventEmitter<string>();
+export class StockSearchComponent implements OnInit {
+  @Output() addStockEvent = new EventEmitter<Stock>();
 
   stockInput: string = '';
 
-  constructor(private storageService: StockTrackerStorageService) { }
+  constructor(
+    private storageService: StockTrackerStorageService,
+    private stockService: StockService) { }
 
   ngOnInit(): void {
   }
 
   trackStock(): void {
-    if (this.storageService.addStockSymbol(this.stockInput)) {
-      this.addStockSymbol.emit(this.stockInput);
+    if (this.storageService.isStored(this.stockInput)) {
+      // TODO: display already stored
+      return;
     }
+
+    const stock = this.stockService.getStock(this.stockInput);
+    if (stock === undefined) {
+      // TODO display error if not exists
+      return;
+    }
+
+    this.storageService.addStockSymbol(stock.symbol);
+    this.addStockEvent.emit(stock);
   }
 
 }

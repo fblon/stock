@@ -9,34 +9,32 @@ export class StockTrackerStorageService {
 
   constructor() { }
 
-  addStockSymbol(symbol: string): boolean {
-    const allSymbols = this.getAllStockSymbols();
-    const existing = allSymbols.includes(symbol); 
-
-    if (!existing) {
-      allSymbols.push(symbol);
-    }
-
-    this.saveAllStockSymbols(allSymbols);
-
-    console.log(allSymbols);
-    return !existing;
+  getAllStockSymbols(): string[] {
+    const jsonStorage = localStorage.getItem(StockTrackerStorageService.storageKey);
+    return jsonStorage ? JSON.parse(jsonStorage) : [];
   }
 
-  deleteStockSymbol(symbol: string): void {
+  isStored(symbol: string) {
+    const allSymbols = this.getAllStockSymbols();
+    return allSymbols.includes(symbol);
+  }
+
+  addStockSymbol(symbol: string): void {
+    const allStockSymbols = this.getAllStockSymbols();
+    allStockSymbols.push(symbol);
+
+    this.saveAllStockSymbols(allStockSymbols);
+  }
+
+  deleteStock(symbol: string): void {
     let allSymbols = this.getAllStockSymbols();
     allSymbols = allSymbols.filter(s => s !== symbol);
 
     this.saveAllStockSymbols(allSymbols);
   }
 
-  private getAllStockSymbols(): string[] {
-    const jsonStorage = localStorage.getItem(StockTrackerStorageService.storageKey);
-    return jsonStorage ? JSON.parse(jsonStorage) : [];
-  }
-
   private saveAllStockSymbols(symbols: string[]) {
-    const jsonSymbols = JSON.stringify(symbols);
-    localStorage.setItem(StockTrackerStorageService.storageKey, jsonSymbols);
+    const jsonStorage = JSON.stringify(symbols);
+    localStorage.setItem(StockTrackerStorageService.storageKey, jsonStorage);
   }
 }
