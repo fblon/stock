@@ -8,7 +8,7 @@ import { StockService } from '../stock.service';
   template: `
     <div class="container border">
       <br>
-      <form #trackerForm="ngForm">
+      <form #trackerForm="ngForm" (ngSubmit)="trackStock()">
         <div>Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)</div>
         <br>
         <div class="form-group col-md-3">
@@ -24,10 +24,9 @@ import { StockService } from '../stock.service';
                   [(ngModel)]="stockInput"></td>
               <td>
                 <button 
-                  type="button" 
+                  type="submit" 
                   class="btn"
                   id="trackBtn"
-                  (click)="trackStock()"
                   [disabled]="!trackerForm.form.valid">Track Stock</button>
               </td>
             </tr>
