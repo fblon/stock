@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
+import { defaultIfEmpty, forkJoin, map, Observable } from 'rxjs';
 import { FinnhubService } from '../shared/finnhub.service';
 import { Stock } from './stock';
 
@@ -12,19 +12,24 @@ export class StockService {
 
   getStock(symbol: string): Observable<Stock | undefined> {
 
-    return this.finnhubService.getDescription(symbol)
+    return forkJoin({
+      description: this.finnhubService.getDescription(symbol),
+      quote: this.finnhubService.getQuote(symbol)
+    })
       .pipe(
-        map(desc => {
-          return !!desc ? {
+        map(o => {
+          const stock: Stock = {
             symbol: symbol,
-            description: desc,
-            currentPrice: 1562,
-            openingPriceOfTheDay: 1400,
-            highPriceOfTheDay: 1750,
-            percentChange: 5.6,
-          } : undefined;
-        })
-    );
+            description: o.description!,
+            currentPrice: o.quote.c,
+            openingPriceOfTheDay: o.quote.o,
+            highPriceOfTheDay: o.quote.h,
+            percentChange: (o.quote.dp / 100),
+          };
+
+          return stock;
+        }),
+        defaultIfEmpty(undefined));
   }
 
   getStocks(symbols: string[]): Observable<Stock[]> {

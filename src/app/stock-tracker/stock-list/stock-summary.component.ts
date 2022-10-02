@@ -26,7 +26,7 @@ import { Stock } from '../stock';
               <tr>
                 <td>
                   <span>Change today: </span>
-                  <span>{{ stock.percentChange }}</span>
+                  <span>{{ stock.percentChange | percent:'1.0-2' }}</span>
                 </td>
                 <td>
                   <span>Opening price: </span>
