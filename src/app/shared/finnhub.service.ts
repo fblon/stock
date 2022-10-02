@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { concatMap, filter, map, Observable } from 'rxjs';
+import { concatMap, filter, map, Observable, of, tap } from 'rxjs';
 
 export interface Quote {
   c: number;
@@ -32,19 +32,25 @@ export class FinnhubService {
     insiderSentiment: 'stock/insider-sentiment'
   }
 
+  private descriptionCache = new Map<string, string>();
+
   constructor(private http: HttpClient) { }
 
-  // TODO: cache
   getDescription(symbol: string): Observable<string> {
     const url = `${this.baseUrl}/${this.apiRoutes.symbolSearch}`;
     let params: HttpParams = this.makeHttpParams();
     params = params.set('q', symbol);
+
+    if (this.descriptionCache.has(symbol)) {
+      return of(this.descriptionCache.get(symbol)!);
+    }
 
     return this.http.get<{ result: { symbol: string, description: string }[] }>(url, { params: params })
       .pipe(
         map(o => o.result),
         concatMap(x => x),
         filter(o => o.symbol === symbol),
+        tap(o => this.descriptionCache.set(symbol, o.description)),
         map(o => o.description));
   }
 

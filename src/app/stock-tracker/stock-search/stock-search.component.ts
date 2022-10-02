@@ -50,13 +50,14 @@ export class StockSearchComponent {
     private stockService: StockService) { }
 
   trackStock(): void {
-    this.isSearching = true;
     const sanitizedInput = this.stockInput.trim().toUpperCase();
 
     if (this.storageService.isStored(sanitizedInput)) {
       // TODO: display already stored
       return;
     }
+
+    this.isSearching = true;
 
     this.stockService.getStock(sanitizedInput)
       .pipe(finalize(() => this.isSearching = false))
