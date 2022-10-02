@@ -48,10 +48,11 @@ import { Stock } from '../stock';
           </td>
         </tr>
         <tr>
-        <button class="btn btn-outline-secondary"
+          <a [routerLink]="['sentiment', stock.symbol]"
+          class="btn btn-outline-secondary"
                 id="sentiment{{ stock.symbol }}">
                 Go to social sentiment detais >
-        </button>
+          </a>
         </tr>
       </table>
     </div>

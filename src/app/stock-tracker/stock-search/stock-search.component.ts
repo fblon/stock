@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { finalize } from 'rxjs';
 import { Stock } from '../stock';
 import { StockTrackerStorageService } from '../stock-tracker-storage.service';
 import { StockService } from '../stock.service';
@@ -33,23 +34,23 @@ import { StockService } from '../stock.service';
           </table>
         </div>
       </form>
+      <p *ngIf="isSearching" class="container fst-italic">Searching...</p>
       <br>
     </div>
 `,
 })
-export class StockSearchComponent implements OnInit {
+export class StockSearchComponent {
   @Output() addStockEvent = new EventEmitter<Stock>();
 
   stockInput: string = '';
+  isSearching: boolean = false;
 
   constructor(
     private storageService: StockTrackerStorageService,
     private stockService: StockService) { }
 
-  ngOnInit(): void {
-  }
-
   trackStock(): void {
+    this.isSearching = true;
     const sanitizedInput = this.stockInput.trim().toUpperCase();
 
     if (this.storageService.isStored(sanitizedInput)) {
@@ -57,17 +58,19 @@ export class StockSearchComponent implements OnInit {
       return;
     }
 
-    this.stockService.getStock(sanitizedInput).subscribe((stock) => {
-      if (stock === undefined) {
-        // TODO display error if not exists
-        return;
-      }
+    this.stockService.getStock(sanitizedInput)
+      .pipe(finalize(() => this.isSearching = false))
+      .subscribe((stock) => {
+        if (stock === undefined) {
+          // TODO display error if not exists
+          return;
+        }
 
-      this.storageService.addStockSymbol(stock.symbol);
-      this.addStockEvent.emit(stock);
+        this.storageService.addStockSymbol(stock.symbol);
+        this.addStockEvent.emit(stock);
 
-      this.stockInput = '';
-    })
+        this.stockInput = '';
+      })
   }
 
 }
