@@ -13,13 +13,11 @@ import { Stock } from '../stock';
           </td>
           <td>
             <button class="btn btn-light shadow-none" style="float: right !important" 
-              (click)="delete()">
+              (click)="delete()" id="remove{{ stock.symbol }}">
               X
             </button>
           </td>
         </tr>
-      </table>
-      <table class="table">
         <tr>
           <td class="w-50">
             <table class="table">
@@ -48,6 +46,12 @@ import { Stock } from '../stock';
           <td class="w-50">
             <app-trend [percentage]="stock.percentChange"></app-trend>
           </td>
+        </tr>
+        <tr>
+        <button class="btn btn-outline-secondary"
+                id="sentiment{{ stock.symbol }}">
+                Go to social sentiment detais >
+        </button>
         </tr>
       </table>
     </div>

@@ -50,12 +50,14 @@ export class StockSearchComponent implements OnInit {
   }
 
   trackStock(): void {
-    if (this.storageService.isStored(this.stockInput)) {
+    const sanitizedInput = this.stockInput.trim().toUpperCase();
+
+    if (this.storageService.isStored(sanitizedInput)) {
       // TODO: display already stored
       return;
     }
 
-    this.stockService.getStock(this.stockInput).subscribe((stock) => {
+    this.stockService.getStock(sanitizedInput).subscribe((stock) => {
       if (stock === undefined) {
         // TODO display error if not exists
         return;
@@ -63,6 +65,8 @@ export class StockSearchComponent implements OnInit {
 
       this.storageService.addStockSymbol(stock.symbol);
       this.addStockEvent.emit(stock);
+
+      this.stockInput = '';
     })
   }
 
