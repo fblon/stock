@@ -56,14 +56,15 @@ export class StockSearchComponent implements OnInit {
       return;
     }
 
-    const stock = this.stockService.getStock(this.stockInput);
-    if (stock === undefined) {
-      // TODO display error if not exists
-      return;
-    }
+    this.stockService.getStock(this.stockInput).subscribe((stock) => {
+      if (stock === undefined) {
+        // TODO display error if not exists
+        return;
+      }
 
-    this.storageService.addStockSymbol(stock.symbol);
-    this.addStockEvent.emit(stock);
+      this.storageService.addStockSymbol(stock.symbol);
+      this.addStockEvent.emit(stock);
+    })
   }
 
 }

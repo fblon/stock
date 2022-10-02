@@ -16,7 +16,7 @@ import { StockService } from '../stock.service';
 })
 export class StockListComponent implements OnInit {
 
-  stocks!: BehaviorSubject<Stock[]>;
+  stocks = new BehaviorSubject<Stock[]>([]);
 
   constructor(
     private storageService: StockTrackerStorageService,
@@ -24,8 +24,10 @@ export class StockListComponent implements OnInit {
 
   ngOnInit(): void {
     const allSymbols = this.storageService.getAllStockSymbols();
-    const allStocks = this.stockService.getStocks(allSymbols);
-    this.stocks = new BehaviorSubject<Stock[]>(allStocks);
+
+    this.stockService.getStocks(allSymbols).subscribe((allStocks) => {
+      this.stocks.next(allStocks);
+    })
   }
 
   addStock(stock: Stock) {

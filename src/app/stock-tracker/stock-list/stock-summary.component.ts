@@ -9,7 +9,7 @@ import { Stock } from '../stock';
       <table class="table">
         <tr>
           <td>
-            <h5>{{ stock.symbol }}</h5>
+            <h5>{{ stock.description }} ({{ stock.symbol }})</h5>
           </td>
           <td>
             <button class="btn btn-light shadow-none" style="float: right !important" 

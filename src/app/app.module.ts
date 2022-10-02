@@ -28,7 +28,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule
   ],
   providers: [
-    {provide: DEFAULT_CURRENCY_CODE, useValue: 'USD'}
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'USD' }
   ],
   bootstrap: [AppComponent]
 })
