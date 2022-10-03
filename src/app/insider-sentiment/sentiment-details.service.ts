@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { defaultIfEmpty, map } from 'rxjs/operators';
 import { FinnhubService, MonthInsiderSentiment } from '../shared/finnhub.service';
 import { MonthSentiment, SentimentDetails } from './sentiment-details';
 
@@ -30,7 +30,8 @@ export class SentimentDetailsService {
             oneMonthAgoSentiment: this.getMonthSentiment(oneMonthAgo, o.sentiments),
             twoMonthsAgoSentiment: this.getMonthSentiment(twoMonthsAgo, o.sentiments)
           };
-        })
+        }),
+        defaultIfEmpty(undefined)
       );
   }
 

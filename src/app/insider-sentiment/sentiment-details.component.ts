@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
 import { SentimentDetails } from './sentiment-details';
 import { SentimentDetailsService } from './sentiment-details.service';
 
 @Component({
   template: `
     <br>
-    <p *ngIf="!sentimentDetails" class="container fst-italic">Loading sentiment details...</p>
+    <p *ngIf="!sentimentDetails && !stockNotFound" class="container fst-italic">Loading sentiment details...</p>
+    <p *ngIf="stockNotFound" class="alert alert-danger">Stock not found: {{ stockNotFound }}</p>
     <div *ngIf="sentimentDetails" class="container border">
       <table class="table">
         <tr><td><h5>{{ sentimentDetails | stockTitle }}</h5></td></tr>
@@ -37,7 +37,7 @@ import { SentimentDetailsService } from './sentiment-details.service';
 export class SentimentDetailsComponent implements OnInit {
 
   sentimentDetails!: SentimentDetails;
-  isLoading!: boolean;
+  stockNotFound: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -45,17 +45,16 @@ export class SentimentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.isLoading = true;
     const symbol = this.route.snapshot.params["symbol"];
 
     this.sentimentService.getSentiment(symbol)
-      .pipe(finalize(() => this.isLoading = false))
       .subscribe((s) => {
         if (s) {
           this.sentimentDetails = s;
         }
-        // TODO: handle undefined sentiment
-
+        else {
+          this.stockNotFound = symbol;
+        }
       });
   }
 
