@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { finalize } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { Stock } from '../stock';
 import { StockTrackerStorageService } from '../stock-tracker-storage.service';
 import { StockService } from '../stock.service';

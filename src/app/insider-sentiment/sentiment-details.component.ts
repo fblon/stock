@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { SentimentDetails } from './sentiment-details';
 import { SentimentDetailsService } from './sentiment-details.service';
 

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { concatMap, filter, map, Observable, of, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { concatMap, filter, map, tap } from 'rxjs/operators';
 
 export interface Quote {
   c: number;

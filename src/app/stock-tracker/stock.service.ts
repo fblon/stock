@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { defaultIfEmpty, forkJoin, map, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { defaultIfEmpty, map } from 'rxjs/operators';
 import { FinnhubService } from '../shared/finnhub.service';
 import { Stock } from './stock';
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { FinnhubService, MonthInsiderSentiment } from '../shared/finnhub.service';
 import { MonthSentiment, SentimentDetails } from './sentiment-details';
 
