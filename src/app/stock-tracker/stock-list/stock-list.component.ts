@@ -1,50 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, finalize } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Stock } from '../stock';
-import { StockTrackerStorageService } from '../stock-tracker-storage.service';
-import { StockService } from '../stock.service';
 
 @Component({
   selector: 'app-stock-list',
   template: `
-    <p *ngIf="isLoading" class="container fst-italic">Loading stock list...</p>
     <ul class="list-group">
-      <li class="container border list-group-item" *ngFor="let stock of stocks | async">
+      <li class="container border list-group-item" *ngFor="let stock of stocks">
         <app-stock-summary [stock]="stock" (deleteStockEvent)="deleteStock(stock)"></app-stock-summary>
       </li>
     </ul>  
   `
 })
-export class StockListComponent implements OnInit {
-
-  stocks = new BehaviorSubject<Stock[]>([]);
-  isLoading!: boolean;
-
-  constructor(
-    private storageService: StockTrackerStorageService,
-    private stockService: StockService) { }
-
-  ngOnInit(): void {
-    this.isLoading = true;
-    const allSymbols = this.storageService.getAllStockSymbols();
-
-    this.stockService.getStocks(allSymbols)
-      .pipe(
-        finalize(() => this.isLoading = false))
-      .subscribe((allStocks) => {
-        this.stocks.next(allStocks);
-      })
+export class StockListComponent {
+  private _stocks: Stock[] = [];
+  
+  @Input() set stocks(value: Stock[]) {
+    this._stocks = value;
   }
 
-  addStock(stock: Stock) {
-    this.storageService.addStockSymbol(stock.symbol);
+  get stocks() {
+    return this._stocks;
+  }
 
-    this.stocks.next([...this.stocks.getValue(), stock]);
+  @Output() deleteStockEvent = new EventEmitter<Stock>();
+
+  addStock(stock: Stock) {
+    this.stocks.push(stock);
   }
 
   deleteStock(stock: Stock) {
-    this.storageService.deleteStock(stock.symbol);
-
-    this.stocks.next(this.stocks.getValue().filter(s => s.symbol !== stock.symbol));
+    this.stocks = this.stocks.filter(s => s !== stock);
+    this.deleteStockEvent.emit(stock);
   }
 }
