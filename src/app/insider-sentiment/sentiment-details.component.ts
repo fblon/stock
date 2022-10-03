@@ -12,13 +12,13 @@ import { SentimentDetailsService } from './sentiment-details.service';
       <table class="table">
         <tr><td><h5>{{ sentimentDetails | stockTitle }}</h5></td></tr>
         <tr class="row">
-          <td *ngIf="sentimentDetails.twoMonthsAgoSentiment" class="col">
+          <td class="col">
             <app-month-sentiment [monthSentiment]="sentimentDetails.twoMonthsAgoSentiment"></app-month-sentiment>
           </td>
-          <td *ngIf="sentimentDetails.oneMonthAgoSentiment" class="col">
+          <td class="col">
             <app-month-sentiment [monthSentiment]="sentimentDetails.oneMonthAgoSentiment"></app-month-sentiment>
           </td>
-          <td *ngIf="sentimentDetails.currentMonthSentiment" class="col">
+          <td class="col">
             <app-month-sentiment [monthSentiment]="sentimentDetails.currentMonthSentiment"></app-month-sentiment>
           </td>
         </tr>
@@ -45,7 +45,7 @@ export class SentimentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const symbol = this.route.snapshot.params["symbol"];
+    const symbol = this.route.snapshot.params["symbol"].toUpperCase();
 
     this.sentimentService.getSentiment(symbol)
       .subscribe((s) => {

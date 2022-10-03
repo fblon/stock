@@ -1,7 +1,11 @@
-export interface MonthSentiment {
-  monthDate: Date;
+export interface MonthSentimentDetails {
   change: number; 
   mspr: number;
+}
+
+export interface MonthSentiment {
+  monthDate: Date;
+  details?: MonthSentimentDetails;
 }
 
 export interface SentimentDetails {

@@ -8,13 +8,16 @@ import { MonthSentiment } from './sentiment-details';
       <tr>
         <td class="col-md-6">
           <table class="table">
-            <tr><td>{{ monthSentiment.monthDate | date:'MMMM' | uppercase }}</td></tr>
-            <tr><td>Change: {{ monthSentiment.change > 0 ? '+' : '' }}{{ monthSentiment.change }} </td></tr>
-            <tr><td>MSPR: {{ monthSentiment.mspr | number:'1.0-2' }} </td></tr>
+            <tr><td class="fw-bold">{{ monthSentiment.monthDate | date:'MMMM' | uppercase }}</td></tr>
+
+            <tr *ngIf="monthSentiment.details"><td>Change: {{ monthSentiment.details.change > 0 ? '+' : '' }}{{ monthSentiment.details.change }} </td></tr>
+            <tr *ngIf="monthSentiment.details"><td>MSPR: {{ monthSentiment.details.mspr | number:'1.0-2' }} </td></tr>
+
+            <tr *ngIf="!monthSentiment.details" class="text-muted"><td>No data available</td></tr>
           </table>
         </td>
-        <td>
-          <app-trend [percentage]="monthSentiment.change"></app-trend>
+        <td *ngIf="monthSentiment.details">
+          <app-trend [percentage]="monthSentiment.details.change"></app-trend>
         </td>
       </tr>
     </table>

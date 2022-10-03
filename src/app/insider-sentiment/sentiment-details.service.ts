@@ -38,20 +38,18 @@ export class SentimentDetailsService {
   private getMonthSentiment(date: Date, sentiments: MonthInsiderSentiment[]): any {
     const matchingSentiment = sentiments.find(s => s.month === date.getMonth() && s.year === date.getFullYear());
 
-    if (!matchingSentiment) {
-      return undefined;
-    }
-
     const monthSentiment: MonthSentiment = {
       monthDate: date,
-      change: matchingSentiment.change,
-      mspr: matchingSentiment.mspr
+      details: matchingSentiment ? {
+        change: matchingSentiment.change,
+        mspr: matchingSentiment.mspr
+      } : undefined
     }
 
     return monthSentiment;
   }
 
-  private getDate(numberOfMonthsAgo: number = 0) : Date {
+  private getDate(numberOfMonthsAgo: number = 0): Date {
     const date = new Date();
     date.setMonth(date.getMonth() - numberOfMonthsAgo);
     return date;
