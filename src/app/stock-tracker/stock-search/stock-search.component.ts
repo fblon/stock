@@ -35,6 +35,8 @@ import { StockService } from '../stock.service';
         </div>
       </form>
       <p *ngIf="isSearching" class="container fst-italic">Searching...</p>
+      <p *ngIf="alreadyTrackedMessage" class="alert alert-warning">{{ alreadyTrackedMessage }}</p>
+      <p *ngIf="doesNotExistMessage" class="alert alert-danger">{{ doesNotExistMessage }}</p>
       <br>
     </div>
 `,
@@ -42,18 +44,30 @@ import { StockService } from '../stock.service';
 export class StockSearchComponent {
   @Output() addStockEvent = new EventEmitter<Stock>();
 
-  stockInput: string = '';
+  private _stockInput: string = '';
+  get stockInput(): string {
+    return this._stockInput;
+  }
+
+  set stockInput(value: string) {
+    this.resetIndicators();
+    this._stockInput = value;
+  }
+
   isSearching: boolean = false;
+  alreadyTrackedMessage: string = '';
+  doesNotExistMessage: string = '';
 
   constructor(
     private storageService: StockTrackerStorageService,
     private stockService: StockService) { }
 
   trackStock(): void {
+    this.resetIndicators();
     const sanitizedInput = this.stockInput.trim().toUpperCase();
 
     if (this.storageService.isStored(sanitizedInput)) {
-      // TODO: display already stored
+      this.alreadyTrackedMessage = `Stock is already being tracked: ${sanitizedInput}`;
       return;
     }
 
@@ -63,7 +77,7 @@ export class StockSearchComponent {
       .pipe(finalize(() => this.isSearching = false))
       .subscribe((stock) => {
         if (stock === undefined) {
-          // TODO display error if not exists
+          this.doesNotExistMessage = `Stock does NOT exist: ${sanitizedInput}`;
           return;
         }
 
@@ -71,6 +85,12 @@ export class StockSearchComponent {
 
         this.stockInput = '';
       })
+  }
+
+  private resetIndicators() {
+    this.alreadyTrackedMessage = '';
+    this.doesNotExistMessage = '';
+    this.isSearching = false;
   }
 
 }
