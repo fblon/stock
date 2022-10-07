@@ -28,4 +28,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # TODO
 - Implement PageNotFoundComponent for insider page when stock is not known
+- Redirect other unknown route to search-tracker page
 - Use web socked to update stock-list real time from Finnhub
+- Unit tests
