@@ -32,4 +32,3 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Use web socked to update stock-list real time from Finnhub
 - Unit tests
 - Cypress
-- Move shared service (finnhub) in a TBD core module

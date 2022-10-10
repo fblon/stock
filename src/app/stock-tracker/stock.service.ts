@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { defaultIfEmpty, map } from 'rxjs/operators';
-import { FinnhubService } from '../shared/finnhub.service';
+import { FinnhubService } from '../core/finnhub.service';
 import { Stock } from './stock';
 
 @Injectable({

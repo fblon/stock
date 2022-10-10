@@ -9,6 +9,7 @@ import { StockTrackerComponent } from './stock-tracker/stock-tracker.component';
 import { StockListComponent } from './stock-tracker/stock-list/stock-list.component';
 import { StockSummaryComponent } from './stock-tracker/stock-list/stock-summary.component';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
+    CoreModule,
     SharedModule
   ],
   providers: [
