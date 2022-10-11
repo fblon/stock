@@ -1,45 +1,43 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { finalize } from "rxjs/operators";
+import { Component, OnInit } from "@angular/core";
+import { BehaviorSubject, EMPTY, Observable } from "rxjs";
+import { switchMap } from "rxjs/operators";
 import { Stock } from "./stock";
-import { StockListComponent } from "./stock-list/stock-list.component";
 import { StockTrackerStorageService } from "./stock-tracker-storage.service";
 import { StockService } from "./stock.service";
 
 @Component({
   template: `
     <app-stock-search (addStockEvent)="addStock($event)"></app-stock-search>
-    <br>
-    <p *ngIf="isLoading" class="container fst-italic">Loading stock list...</p>
-    <app-stock-list (deleteStockEvent)="deleteStock($event)" #stockList></app-stock-list>`
+    <app-stock-list *ngIf="stocks | async as asyncStocks" [stocks]="asyncStocks" (deleteStockEvent)="deleteStock($event)"></app-stock-list>`
 })
 export class StockTrackerComponent implements OnInit {
-  @ViewChild(StockListComponent) stockList!: StockListComponent;
+  stocks: Observable<Stock[]> = EMPTY;
 
-  isLoading!: boolean;
+  private refreshToken = new BehaviorSubject(undefined);
 
   constructor(
     private storageService: StockTrackerStorageService,
     private stockService: StockService) {
-    }
+  }
 
   ngOnInit(): void {
-    const allSymbols = this.storageService.getAllStockSymbols();
-    this.isLoading = true;
 
-    this.stockService.getStocks(allSymbols)
-      .pipe(
-        finalize(() => this.isLoading = false))
-      .subscribe((allStocks) => {
-        this.stockList.stocks = allStocks;
-      })
+    this.stocks = this.refreshToken.pipe(
+      switchMap(() => this.getStocks()));
   }
 
   addStock(stock: Stock) {
     this.storageService.addStockSymbol(stock.symbol);
-    this.stockList.addStock(stock);
+    this.refreshToken.next(undefined);
   }
 
   deleteStock(stock: Stock) {
     this.storageService.deleteStock(stock.symbol);
+    this.refreshToken.next(undefined);
+  }
+
+  private getStocks() : Observable<Stock[]> {
+    const allSymbols = this.storageService.getAllStockSymbols();
+    return this.stockService.getStocks(allSymbols);
   }
 }

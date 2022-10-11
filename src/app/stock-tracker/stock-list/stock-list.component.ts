@@ -12,21 +12,8 @@ import { Stock } from '../stock';
   `
 })
 export class StockListComponent {
-  private _stocks: Stock[] = [];
-  
-  @Input() set stocks(value: Stock[]) {
-    this._stocks = value;
-  }
-
-  get stocks() {
-    return this._stocks;
-  }
-
+  @Input() stocks: Stock[] = [];
   @Output() deleteStockEvent = new EventEmitter<Stock>();
-
-  addStock(stock: Stock) {
-    this.stocks.push(stock);
-  }
 
   deleteStock(stock: Stock) {
     this.stocks = this.stocks.filter(s => s !== stock);
