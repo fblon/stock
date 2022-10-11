@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SentimentDetails } from './sentiment-details';
-import { SentimentDetailsService } from './sentiment-details.service';
 
 @Component({
   template: `
     <br>
-    <p *ngIf="!sentimentDetails && !stockNotFound" class="container fst-italic">Loading sentiment details...</p>
-    <p *ngIf="stockNotFound" class="alert alert-danger">Stock not found: {{ stockNotFound }}</p>
     <div *ngIf="sentimentDetails" class="container border">
       <table class="table">
         <tr><td><h5>{{ sentimentDetails | stockTitle }}</h5></td></tr>
@@ -40,22 +37,11 @@ export class SentimentDetailsComponent implements OnInit {
   stockNotFound: string = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private sentimentService: SentimentDetailsService) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
-    const symbol = this.route.snapshot.params["symbol"].toUpperCase();
-
-    this.sentimentService.getSentiment(symbol)
-      .subscribe((s) => {
-        if (s) {
-          this.sentimentDetails = s;
-        }
-        else {
-          this.stockNotFound = symbol;
-        }
-      });
+    this.sentimentDetails = this.route.snapshot.data["sentimentDetails"];
   }
 
 }
