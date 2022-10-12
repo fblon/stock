@@ -28,5 +28,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 # TODO
 - Use web socked to update stock-list real time from Finnhub
+- Implement error handling
 - Unit tests
 - Cypress

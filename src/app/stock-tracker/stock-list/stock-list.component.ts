@@ -12,11 +12,10 @@ import { Stock } from '../stock';
   `
 })
 export class StockListComponent {
-  @Input() stocks: Stock[] = [];
+  @Input() stocks!: Stock[];
   @Output() deleteStockEvent = new EventEmitter<Stock>();
 
   deleteStock(stock: Stock) {
-    this.stocks = this.stocks.filter(s => s !== stock);
     this.deleteStockEvent.emit(stock);
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { defaultIfEmpty, map } from 'rxjs/operators';
 import { FinnhubService } from '../core/finnhub.service';
 import { Stock } from './stock';
@@ -34,6 +34,10 @@ export class StockService {
   }
 
   getStocks(symbols: string[]): Observable<Stock[]> {
+    if (symbols.length === 0) {
+      return of([]);
+    }
+
     return forkJoin(
       symbols.map(s => this.getStock(s)
         .pipe(map(o => <Stock>o))));
