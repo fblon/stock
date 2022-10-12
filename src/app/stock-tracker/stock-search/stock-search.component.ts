@@ -54,16 +54,16 @@ export class StockSearchComponent {
     private storageService: StockTrackerStorageService,
     private stockService: StockService) { }
 
-    get stockInput(): string {
-      return this._stockInput;
-    }
-  
-    set stockInput(value: string) {
-      this.resetIndicators();
-      this._stockInput = value;
-    }
+  get stockInput(): string {
+    return this._stockInput;
+  }
 
-    trackStock(): void {
+  set stockInput(value: string) {
+    this.resetIndicators();
+    this._stockInput = value;
+  }
+
+  trackStock(): void {
     this.resetIndicators();
     const sanitizedInput = this.stockInput.trim().toUpperCase();
 
