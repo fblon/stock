@@ -41,7 +41,7 @@ export class SentimentDetailsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.sentimentDetails = this.route.snapshot.data["sentimentDetails"];
+    this.sentimentDetails = this.route.snapshot.data['sentimentDetails'];
   }
 
 }

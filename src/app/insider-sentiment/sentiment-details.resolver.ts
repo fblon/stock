@@ -18,12 +18,12 @@ export class SentimentDetailsResolver implements Resolve<SentimentDetails> {
   }
 
   resolve(route: ActivatedRouteSnapshot): Observable<SentimentDetails> {
-    const symbol = route.params["symbol"].toUpperCase();
+    const symbol = route.params['symbol'].toUpperCase();
 
     return this.sentimentService.getSentiment(symbol).pipe(
       tap(o => {
         if (o == null) {
-          this.router.navigate(["/404"]);
+          this.router.navigate(['/404']);
         }
       }),
       map(o => <SentimentDetails>o)

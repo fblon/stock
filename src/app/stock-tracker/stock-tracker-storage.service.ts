@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class StockTrackerStorageService {
 
-  private static readonly storageKey = "stockSymbols";
+  private static readonly storageKey = 'stockSymbols';
 
   getAllStockSymbols(): string[] {
     const jsonStorage = localStorage.getItem(StockTrackerStorageService.storageKey);

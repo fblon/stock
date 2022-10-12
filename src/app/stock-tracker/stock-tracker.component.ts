@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { EMPTY, merge, Observable, Subject, timer } from "rxjs";
-import { startWith, switchMap } from "rxjs/operators";
-import { Stock } from "./stock";
-import { StockTrackerStorageService } from "./stock-tracker-storage.service";
-import { StockService } from "./stock.service";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { EMPTY, merge, Observable, Subject, timer } from 'rxjs';
+import { startWith, switchMap } from 'rxjs/operators';
+import { Stock } from './stock';
+import { StockTrackerStorageService } from './stock-tracker-storage.service';
+import { StockService } from './stock.service';
 
 @Component({
   template: `
@@ -26,7 +26,7 @@ export class StockTrackerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const initialStocks = this.route.snapshot.data["stocks"];
+    const initialStocks = this.route.snapshot.data['stocks'];
     const refreshedStocks = merge(this.autoRefreshToken, this.refreshToken)
       .pipe(
         switchMap(() => this.getStocks()));

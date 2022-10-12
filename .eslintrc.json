@@ -23,6 +23,7 @@
       "rules": {
         "@typescript-eslint/member-ordering": "error",
         "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0}],
+        "quotes": ["error", "single"],
         "@angular-eslint/directive-selector": [
           "error",
           {
