@@ -44,25 +44,26 @@ import { StockService } from '../stock.service';
 export class StockSearchComponent {
   @Output() addStockEvent = new EventEmitter<Stock>();
 
-  private _stockInput = '';
-  get stockInput(): string {
-    return this._stockInput;
-  }
-
-  set stockInput(value: string) {
-    this.resetIndicators();
-    this._stockInput = value;
-  }
-
   isSearching = false;
   alreadyTrackedMessage = '';
   doesNotExistMessage = '';
+
+  private _stockInput = '';
 
   constructor(
     private storageService: StockTrackerStorageService,
     private stockService: StockService) { }
 
-  trackStock(): void {
+    get stockInput(): string {
+      return this._stockInput;
+    }
+  
+    set stockInput(value: string) {
+      this.resetIndicators();
+      this._stockInput = value;
+    }
+
+    trackStock(): void {
     this.resetIndicators();
     const sanitizedInput = this.stockInput.trim().toUpperCase();
 
