@@ -11,6 +11,4 @@ import { Component, Input } from '@angular/core';
 })
 export class TrendComponent {
   @Input() percentage!: number;
-
-  constructor() { }
 }

@@ -35,7 +35,7 @@ export class SentimentDetailsService {
       );
   }
 
-  private getMonthSentiment(date: Date, sentiments: MonthInsiderSentiment[]): any {
+  private getMonthSentiment(date: Date, sentiments: MonthInsiderSentiment[]): MonthSentiment {
     const matchingSentiment = sentiments.find(s => s.month === date.getMonth() && s.year === date.getFullYear());
 
     const monthSentiment: MonthSentiment = {
@@ -49,7 +49,7 @@ export class SentimentDetailsService {
     return monthSentiment;
   }
 
-  private getDate(numberOfMonthsAgo: number = 0): Date {
+  private getDate(numberOfMonthsAgo = 0): Date {
     const date = new Date();
     date.setMonth(date.getMonth() - numberOfMonthsAgo);
     return date;

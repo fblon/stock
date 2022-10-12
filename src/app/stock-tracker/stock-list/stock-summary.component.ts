@@ -62,8 +62,6 @@ export class StockSummaryComponent {
   @Input() stock!: Stock;
   @Output() deleteStockEvent = new EventEmitter();
 
-  constructor() { }
-
   delete() {
     this.deleteStockEvent.emit()
 

@@ -21,7 +21,7 @@ export class StockService {
         map(o => {
           const stock: Stock = {
             symbol: symbol,
-            description: o.description!,
+            description: o.description,
             currentPrice: o.quote.c,
             openingPriceOfTheDay: o.quote.o,
             highPriceOfTheDay: o.quote.h,

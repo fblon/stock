@@ -44,7 +44,7 @@ import { StockService } from '../stock.service';
 export class StockSearchComponent {
   @Output() addStockEvent = new EventEmitter<Stock>();
 
-  private _stockInput: string = '';
+  private _stockInput = '';
   get stockInput(): string {
     return this._stockInput;
   }
@@ -54,9 +54,9 @@ export class StockSearchComponent {
     this._stockInput = value;
   }
 
-  isSearching: boolean = false;
-  alreadyTrackedMessage: string = '';
-  doesNotExistMessage: string = '';
+  isSearching = false;
+  alreadyTrackedMessage = '';
+  doesNotExistMessage = '';
 
   constructor(
     private storageService: StockTrackerStorageService,

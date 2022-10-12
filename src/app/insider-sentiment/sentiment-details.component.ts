@@ -34,7 +34,7 @@ import { SentimentDetails } from './sentiment-details';
 export class SentimentDetailsComponent implements OnInit {
 
   sentimentDetails!: SentimentDetails;
-  stockNotFound: string = '';
+  stockNotFound = '';
 
   constructor(
     private route: ActivatedRoute) { }

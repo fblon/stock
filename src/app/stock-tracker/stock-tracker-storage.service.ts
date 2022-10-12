@@ -7,8 +7,6 @@ export class StockTrackerStorageService {
 
   private static readonly storageKey = "stockSymbols";
 
-  constructor() { }
-
   getAllStockSymbols(): string[] {
     const jsonStorage = localStorage.getItem(StockTrackerStorageService.storageKey);
     return jsonStorage ? JSON.parse(jsonStorage) : [];

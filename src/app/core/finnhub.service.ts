@@ -41,7 +41,7 @@ export class FinnhubService {
     params = params.set('q', symbol);
 
     if (this.descriptionCache.has(symbol)) {
-      return of(this.descriptionCache.get(symbol)!);
+      return of(<string>this.descriptionCache.get(symbol));
     }
 
     return this.http.get<{ result: { symbol: string, description: string }[] }>(url, { params: params })
