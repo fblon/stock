@@ -69,8 +69,8 @@ export class FinnhubService {
     params = params.set('to', this.getISODate(to));
 
     return this.http.get<{ data: MonthInsiderSentiment[] }>(url, { params: params })
-    .pipe(
-      map(o => o.data));
+      .pipe(
+        map(o => o.data));
 
   }
 
