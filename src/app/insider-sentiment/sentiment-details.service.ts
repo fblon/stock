@@ -44,7 +44,7 @@ export class SentimentDetailsService {
         change: matchingSentiment.change,
         mspr: matchingSentiment.mspr
       } : undefined
-    }
+    };
 
     return monthSentiment;
   }

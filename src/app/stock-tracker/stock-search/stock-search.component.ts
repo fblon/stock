@@ -85,7 +85,7 @@ export class StockSearchComponent {
         this.addStockEvent.emit(stock);
 
         this.stockInput = '';
-      })
+      });
   }
 
   private resetIndicators() {

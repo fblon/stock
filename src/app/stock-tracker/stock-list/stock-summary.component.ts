@@ -63,7 +63,7 @@ export class StockSummaryComponent {
   @Output() deleteStockEvent = new EventEmitter();
 
   delete() {
-    this.deleteStockEvent.emit()
+    this.deleteStockEvent.emit();
 
   }
 }

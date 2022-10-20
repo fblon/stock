@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
+import { combineLatest, forkJoin, Observable, of } from 'rxjs';
 import { defaultIfEmpty, map } from 'rxjs/operators';
 import { FinnhubService } from '../core/finnhub.service';
 import { Stock } from './stock';
@@ -41,5 +41,24 @@ export class StockService {
     return forkJoin(
       symbols.map(s => this.getStock(s)
         .pipe(map(o => <Stock>o))));
+  }
+
+  getRealTimeStocks(symbols: string[]): Observable<Stock[]> {
+    this.finnhubService.updateRealTimeTrades(symbols);
+
+    return combineLatest([this.getStocks(symbols), this.finnhubService.trades])
+      .pipe(
+        map(([stocks, trades]) => {
+          trades.forEach(t => {
+            const index = stocks.findIndex(s => s.symbol === t.s);
+
+            if (t.p != null) {
+              stocks[index].currentPrice = t.p;
+              stocks[index].highPriceOfTheDay = Math.max(stocks[index].highPriceOfTheDay, stocks[index].currentPrice);
+            }
+          });
+
+          return stocks;
+        }));
   }
 }

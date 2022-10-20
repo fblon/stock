@@ -25,6 +25,6 @@ import { MonthSentiment } from './sentiment-details';
 })
 export class MonthSentimentComponent {
 
-  @Input() monthSentiment!: MonthSentiment
+  @Input() monthSentiment!: MonthSentiment;
 
 }
