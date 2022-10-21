@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, of, Subject } from 'rxjs';
-import { concatMap, filter, map, switchMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { concatMap, filter, map, pairwise, tap } from 'rxjs/operators';
+import { webSocket } from 'rxjs/webSocket';
 
 export interface Quote {
   c: number;
@@ -15,8 +16,14 @@ export interface Quote {
 
 export interface Trade {
   s: string;
-  p?: number;
-  v?: number;
+  p: number;
+  v: number;
+}
+
+export interface TradeEvent {
+  type: string;
+  symbol: string;
+  data?: Trade[];
 }
 
 export interface MonthInsiderSentiment {
@@ -40,59 +47,41 @@ export class FinnhubService implements OnDestroy {
   };
 
   private webSocketUrl = `wss://ws.finnhub.io?token=${this.token}`;
-  private socket: WebSocket;
-  private socketOpenedToken = new Subject();
-  private _trades = new BehaviorSubject<Trade[]>([]);
+  private socket = webSocket<TradeEvent>(this.webSocketUrl);
   private userTradesUpdateToken = new BehaviorSubject<string[]>([]);
-  private serverTradesUpdateToken = new BehaviorSubject<Trade[]>([]);
 
   private descriptionCache = new Map<string, string>();
 
   constructor(private http: HttpClient) {
-    this.trades = this._trades.asObservable();
-    this.socketOpenedToken.pipe(
-      take(1),
-      switchMap(() => combineLatest([this.userTradesUpdateToken, this.serverTradesUpdateToken]))
-    )
-      .subscribe(([userSymbols, serverTrades]) => {
-        let currentTrades = this._trades.getValue();
+    // open connection
+    this.socket.subscribe();
 
-        const removedSymbols = currentTrades.filter(t => !userSymbols.some(s => s === t.s)).map(t => t.s);
-        const addedSymbols = userSymbols.filter(s => !currentTrades.some(t => s === t.s));
-        currentTrades = currentTrades.filter(t => userSymbols.some(s => t.s === s));
-        currentTrades.push(...addedSymbols.map(s => ({ s: s })));
+    // real time trade flow
+    this.trades = this.socket.pipe(
+      filter((event: TradeEvent) => event.type === 'trade'),
+      map((event: TradeEvent) => {
+        return event.data ?? [];
+      }));
+
+    // trade flow update from user selection
+    this.userTradesUpdateToken.pipe(pairwise()).
+      subscribe(([prev, curr]) => {
+
+        const removedSymbols = prev.filter(p => !curr.some(c => c === p));
+        const addedSymbols = curr.filter(c => !prev.some(p => p === c));
 
         removedSymbols.forEach(s => {
-          this.socket.send(JSON.stringify({ 'type': 'unsubscribe', 'symbol': s }));
+          this.socket.next({ 'type': 'unsubscribe', 'symbol': s });
         });
 
         addedSymbols.forEach(s =>
-          this.socket.send(JSON.stringify({ 'type': 'subscribe', 'symbol': s }))
+          this.socket.next({ 'type': 'subscribe', 'symbol': s })
         );
-
-        serverTrades.forEach(st => {
-          const index = currentTrades.findIndex(t => t.s === st.s);
-          if (index > -1) {
-            currentTrades[index] = st;
-          }
-        });
-
-        this._trades.next(currentTrades);
       });
-
-    this.socket = new WebSocket(this.webSocketUrl);
-    this.socket.addEventListener('open', () => this.socketOpenedToken.next({}));
-    this.socket.addEventListener('message', (event) => {
-
-      const tradeEvent: { data: Trade[], type: string } = JSON.parse(event.data);
-      if (tradeEvent.type === 'trade') {
-        this.serverTradesUpdateToken.next(tradeEvent.data);
-      }
-    });
   }
 
   ngOnDestroy(): void {
-    this.socket.close();
+    this.socket.complete();
   }
 
   getDescription(symbol: string): Observable<string> {
