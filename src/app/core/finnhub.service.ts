@@ -3,6 +3,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { concatMap, filter, map, pairwise, tap } from 'rxjs/operators';
 import { webSocket } from 'rxjs/webSocket';
+import { environment } from 'src/environments/environment';
 
 export interface Quote {
   c: number;
@@ -38,7 +39,6 @@ export class FinnhubService implements OnDestroy {
 
   public readonly trades: Observable<Trade[]>;
 
-  private baseUrl = 'https://finnhub.io/api/v1';
   private token = 'bu4f8kn48v6uehqi3cqg';
   private apiRoutes = {
     symbolSearch: 'search',
@@ -85,7 +85,7 @@ export class FinnhubService implements OnDestroy {
   }
 
   getDescription(symbol: string): Observable<string> {
-    const url = `${this.baseUrl}/${this.apiRoutes.symbolSearch}`;
+    const url = `${environment.finnhubBaseUrl}/${this.apiRoutes.symbolSearch}`;
     let params: HttpParams = this.makeHttpParams();
     params = params.set('q', symbol);
 
@@ -103,7 +103,7 @@ export class FinnhubService implements OnDestroy {
   }
 
   getQuote(symbol: string): Observable<Quote> {
-    const url = `${this.baseUrl}/${this.apiRoutes.quote}`;
+    const url = `${environment.finnhubBaseUrl}/${this.apiRoutes.quote}`;
     let params: HttpParams = this.makeHttpParams();
     params = params.set('symbol', symbol);
 
@@ -115,7 +115,7 @@ export class FinnhubService implements OnDestroy {
   }
 
   getSentiments(symbol: string, from: Date, to: Date): Observable<MonthInsiderSentiment[]> {
-    const url = `${this.baseUrl}/${this.apiRoutes.insiderSentiment}`;
+    const url = `${environment.finnhubBaseUrl}/${this.apiRoutes.insiderSentiment}`;
     let params: HttpParams = this.makeHttpParams();
     params = params.set('symbol', symbol);
     params = params.set('from', this.getISODate(from));

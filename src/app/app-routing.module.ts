@@ -6,15 +6,19 @@ import { StockTrackerResolver } from './stock-tracker/stock-tracker.resolver';
 
 const routes: Routes = [
   {
-    path: 'sentiment',
-    loadChildren: () => import('./insider-sentiment/insider-sentiment.module').then(m => m.InsiderSentimentModule)
-  },
-  { path: '404', component: PageNotFoundComponent },
-  {
     path: '',
     component: StockTrackerComponent,
     resolve: { stocks: StockTrackerResolver }
   },
+  {
+    path: 'sentiment',
+    redirectTo: ''
+  },
+  {
+    path: 'sentiment',
+    loadChildren: () => import('./insider-sentiment/insider-sentiment.module').then(m => m.InsiderSentimentModule)
+  },
+  { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '' },
 ];
 

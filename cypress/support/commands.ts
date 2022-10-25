@@ -34,3 +34,14 @@ Cypress.Commands.add('checkDefaultPage', () => {
   cy.get(stockInputSelector).should('exist');
   cy.get(trackButtonSelector).should('exist');
 });
+
+Cypress.Commands.add('checkSentimentPage', () => {
+  const sentimentBackBtnSelector = Cypress.env('sentimentBackBtnSelector');
+
+  cy.url().should('include', '/sentiment');
+  cy.get(sentimentBackBtnSelector).should('exist');
+});
+
+Cypress.Commands.add('check404Page', () => {
+  cy.url().should('include', '/404');
+});
