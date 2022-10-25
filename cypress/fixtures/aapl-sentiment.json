@@ -1,0 +1,26 @@
+{
+  "data": [
+    {
+      "symbol": "AAPL",
+      "year": 2022,
+      "month": 8,
+      "change": -250366,
+      "mspr": -79.69429
+    },
+    {
+      "symbol": "AAPL",
+      "year": 2022,
+      "month": 9,
+      "change": 814342,
+      "mspr": 100
+    },
+    {
+      "symbol": "AAPL",
+      "year": 2022,
+      "month": 10,
+      "change": -1121382,
+      "mspr": -27.312956
+    }
+  ],
+  "symbol": "AAPL"
+}
