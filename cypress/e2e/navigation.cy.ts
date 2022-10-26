@@ -15,7 +15,7 @@ describe('Navigation', () => {
   });
 
   it('when sentiment url WITHOUT a symbol is provided should navigate to default', () => {
-    cy.visit(`/sentiment`);
+    cy.visit('/sentiment');
 
     cy.checkDefaultPage();
   });
@@ -26,14 +26,24 @@ describe('Navigation', () => {
     const searchUrl = `${finnhubUrl}/search?*q=${symbol}*`;
     const getUrl = `${finnhubUrl}/stock/insider-sentiment?*symbol=${symbol}*from=*&to=*`;
 
-    cy.intercept('GET', searchUrl, { fixture: 'aapl-search.json' }).as('search');
-    cy.intercept('GET', getUrl, { fixture: 'aapl-sentiment.json' }).as('sentiment');
+    cy.intercept('GET', searchUrl, req => {
+      req.reply({
+        statusCode: 200,
+        fixture: 'aapl-search.json'
+      });
+    }).as('search');
+    cy.intercept('GET', getUrl, req => {
+      req.reply({
+        statusCode: 200,
+        fixture: 'aapl-sentiment.json'
+      });
+    }).as('sentiment');
 
-    cy.visit(`/sentiment/${symbol}`);
+    cy.visit(`/sentiment/${symbol}`)
+      .then(() => cy.checkSpinner());
 
-    cy.wait('@search');
-    cy.wait('@sentiment');
-    cy.checkSentimentPage();
+    cy.wait(['@search', '@sentiment'], { timeout: 15000 }); // slow in headless mode, don't know why :(
+    cy.checkSentimentPage(symbol);
   });
 
   it('when sentiment url with NOT existing symbol is provided should navigate to 404 page', () => {
@@ -45,10 +55,10 @@ describe('Navigation', () => {
     cy.intercept('GET', searchUrl, { fixture: 'dummy-search.json' }).as('search');
     cy.intercept('GET', getUrl, { fixture: 'dummy-sentiment.json' }).as('sentiment');
 
-    cy.visit(`/sentiment/${symbol}`);
+    cy.visit(`/sentiment/${symbol}`)
+      .then(() => cy.checkSpinner());
 
-    cy.wait('@search');
-    cy.wait('@sentiment');
+    cy.wait(['@search', '@sentiment']);
     cy.check404Page();
   });
 });

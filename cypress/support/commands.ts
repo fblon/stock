@@ -33,15 +33,22 @@ Cypress.Commands.add('checkDefaultPage', () => {
   cy.url().should('eq', Cypress.config().baseUrl);
   cy.get(stockInputSelector).should('exist');
   cy.get(trackButtonSelector).should('exist');
+  cy.get('.spinner-border').should('not.exist');
 });
 
-Cypress.Commands.add('checkSentimentPage', () => {
+Cypress.Commands.add('checkSentimentPage', (symbol: string) => {
   const sentimentBackBtnSelector = Cypress.env('sentimentBackBtnSelector');
 
-  cy.url().should('include', '/sentiment');
+  cy.url().should('include', `/sentiment/${symbol}`);
   cy.get(sentimentBackBtnSelector).should('exist');
+  cy.get('.spinner-border').should('not.exist');
 });
 
 Cypress.Commands.add('check404Page', () => {
   cy.url().should('include', '/404');
+  cy.get('.spinner-border').should('not.exist');
+});
+
+Cypress.Commands.add('checkSpinner', () => {
+  cy.get('.spinner-border').should('exist');
 });

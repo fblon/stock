@@ -8,7 +8,10 @@
     "buildPages": "ng build --configuration=production --base-href=/stock-tracker/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "cypress": "npx cypress open",
+    "cypress:headless": "concurrently \"npm start\" \"npx cypress run\"",
+    "cypress:headed": "concurrently \"npm start\" \"npx cypress run --headed\""
   },
   "private": true,
   "dependencies": {
