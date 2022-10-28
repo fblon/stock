@@ -1,0 +1,149 @@
+{
+  "count": 24,
+  "result": [
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TSLA",
+      "symbol": "TSLA",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TSLA.MX",
+      "symbol": "TSLA.MX",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TSLA.SW",
+      "symbol": "TSLA.SW",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TSLA.VI",
+      "symbol": "TSLA.VI",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TSLA.MI",
+      "symbol": "TSLA.MI",
+      "type": "Common Stock"
+    },
+    {
+      "description": "LS 1X TSLA",
+      "displaySymbol": "TSLA.L",
+      "symbol": "TSLA.L",
+      "type": "ETP"
+    },
+    {
+      "description": "LS 1X TSLA",
+      "displaySymbol": "TSLA.AS",
+      "symbol": "TSLA.AS",
+      "type": "ETP"
+    },
+    {
+      "description": "TESLA INC - CDR",
+      "displaySymbol": "TSLA.NE",
+      "symbol": "TSLA.NE",
+      "type": "Receipt"
+    },
+    {
+      "description": "Tesla Inc",
+      "displaySymbol": "TL0.DU",
+      "symbol": "TL0.DU",
+      "type": ""
+    },
+    {
+      "description": "Tesla Inc",
+      "displaySymbol": "TL0.HA",
+      "symbol": "TL0.HA",
+      "type": ""
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TSLAUSD.SW",
+      "symbol": "TSLAUSD.SW",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TL0.MU",
+      "symbol": "TL0.MU",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TRISUL SA",
+      "displaySymbol": "TRIS3.SA",
+      "symbol": "TRIS3.SA",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TL0.DE",
+      "symbol": "TL0.DE",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "0R0X.L",
+      "symbol": "0R0X.L",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TEPX.DU",
+      "symbol": "TEPX.DU",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TL0.F",
+      "symbol": "TL0.F",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TL0.HM",
+      "symbol": "TL0.HM",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TL0.BE",
+      "symbol": "TL0.BE",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TSLA-RM.ME",
+      "symbol": "TSLA-RM.ME",
+      "type": "Common Stock"
+    },
+    {
+      "description": "TESLA INC",
+      "displaySymbol": "TL0.SG",
+      "symbol": "TL0.SG",
+      "type": "Common Stock"
+    },
+    {
+      "description": "Tethys Oil Ab",
+      "displaySymbol": "0A1V.L",
+      "symbol": "0A1V.L",
+      "type": ""
+    },
+    {
+      "description": "LS 1X TSLA",
+      "displaySymbol": "1TSL.PA",
+      "symbol": "1TSL.PA",
+      "type": "ETP"
+    },
+    {
+      "description": "LS 1X TSLA",
+      "displaySymbol": "TSL1.L",
+      "symbol": "TSL1.L",
+      "type": "ETP"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "count": 27,
+  "result": [
+    {
+      "description": "ALPHABET INC-CL A",
+      "displaySymbol": "GOOGL",
+      "symbol": "GOOGL",
+      "type": "Common Stock"
+    },
+    {
+      "description": "ALPHABET INC-CL A",
+      "displaySymbol": "GOOGL.SN",
+      "symbol": "GOOGL.SN",
+      "type": "Common Stock"
+    },
+    {
+      "description": "ALPHABET INC-CL A",
+      "displaySymbol": "GOOGL.MX",
+      "symbol": "GOOGL.MX",
+      "type": "Common Stock"
+    },
+    {
+      "description": "ALPHABET INC-CL A",
+      "displaySymbol": "GOOGL.SW",
+      "symbol": "GOOGL.SW",
+      "type": "Common Stock"
+    },
+    {
+      "description": "ALPHABET INC-CL A",
+      "displaySymbol": "GOOGL.MI",
+      "symbol": "GOOGL.MI",
+      "type": "Common Stock"
+    },
+    {
+      "description": "GOOI GLOBAL INC",
+      "displaySymbol": "GOOI",
+      "symbol": "GOOI",
+      "type": "Common Stock"
+    },
+    {
+      "description": "GUOCO GROUP LTD",
+      "displaySymbol": "GULRF",
+      "symbol": "GULRF",
+      "type": "Common Stock"
+    },
+    {
+      "description": "GOLCONDA GOLD LTD",
+      "displaySymbol": "GGGOD",
+      "symbol": "GGGOD",
+      "type": "Common Stock"
+    },
+    {
+      "description": "Google Inc",
+      "displaySymbol": "A1VEW3.DU",
+      "symbol": "A1VEW3.DU",
+      "type": ""
+    },
+    {
+      "description": "Google Inc",
+      "displaySymbol": "A1VEW3.BE",
+      "symbol": "A1VEW3.BE",
+      "type": ""
+    },
+    {
+      "description": "GUOCO GROUP LTD",
+      "displaySymbol": "53.HK",
+      "symbol": "53.HK",
+      "type": "Common Stock"
+    },
+    {
+      "description": "GUOCO GROUP LTD",
+      "displaySymbol": "GUO.F",
+      "symbol": "GUO.F",
+      "type": "Common Stock"
+    },
+    {
+      "description": "GOLCONDA GOLD LTD",
+      "displaySymbol": "Y87.F",
+      "symbol": "Y87.F",
+      "type": "Common Stock"
+    },
+    {
+      "description": "ICMTRADER  Google Inc",
+      "displaySymbol": "GOOGL/USD",
+      "symbol": "ICMTRADER:152",
+      "type": "US Equities (CFDs)"
+    },
+    {
+      "description": "GOLCONDA GOLD LTD",
+      "displaySymbol": "Y87.MU",
+      "symbol": "Y87.MU",
+      "type": "Common Stock"
+    },
+    {
+      "description": "Paragon Mortgages PLC",
+      "displaySymbol": "41UQ.L",
+      "symbol": "41UQ.L",
+      "type": ""
+    },
+    {
+      "description": "Bittrex GOOGL/USD",
+      "displaySymbol": "GOOGL/USD",
+      "symbol": "BITTREX:GOOGL-USD",
+      "type": "Crypto"
+    },
+    {
+      "description": "Paragon Mortgages PLC",
+      "displaySymbol": "41TP.L",
+      "symbol": "41TP.L",
+      "type": ""
+    },
+    {
+      "description": "Paragon Mortgages PLC",
+      "displaySymbol": "41ZA.L",
+      "symbol": "41ZA.L",
+      "type": ""
+    },
+    {
+      "description": "Seagate Technology Plc",
+      "displaySymbol": "847.MU",
+      "symbol": "847.MU",
+      "type": ""
+    },
+    {
+      "description": "Paragon Mortgages PLC",
+      "displaySymbol": "41YH.L",
+      "symbol": "41YH.L",
+      "type": ""
+    },
+    {
+      "description": "Paragon Mortgages PLC",
+      "displaySymbol": "41WT.L",
+      "symbol": "41WT.L",
+      "type": ""
+    },
+    {
+      "description": "GOLCONDA GOLD LTD",
+      "displaySymbol": "GG.NE",
+      "symbol": "GG.NE",
+      "type": "Common Stock"
+    },
+    {
+      "description": "GOLCONDA GOLD LTD",
+      "displaySymbol": "GG.V",
+      "symbol": "GG.V",
+      "type": "Common Stock"
+    },
+    {
+      "description": "Bittrex GOOGL/BTC",
+      "displaySymbol": "GOOGL/BTC",
+      "symbol": "BITTREX:GOOGL-BTC",
+      "type": "Crypto"
+    },
+    {
+      "description": "Paragon Mortgages PLC",
+      "displaySymbol": "41UD.L",
+      "symbol": "41UD.L",
+      "type": ""
+    },
+    {
+      "description": "AMIGO HOLDINGS PLC",
+      "displaySymbol": "0VG.F",
+      "symbol": "0VG.F",
+      "type": "Common Stock"
+    }
+  ]
+}
