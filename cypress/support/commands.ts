@@ -26,14 +26,18 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
 
-Cypress.Commands.add('checkDefaultPage', () => {
+function getSpinner(): Cypress.Chainable<JQuery<HTMLElement>> {
+  return cy.get('.spinner-border');
+}
+
+Cypress.Commands.add('checkStockTrackerPage', () => {
   const stockInputSelector = Cypress.env('stockInputSelector');
   const trackButtonSelector = Cypress.env('trackButtonSelector');
 
   cy.url().should('eq', Cypress.config().baseUrl);
   cy.get(stockInputSelector).should('exist');
   cy.get(trackButtonSelector).should('exist');
-  cy.get('.spinner-border').should('not.exist');
+  getSpinner().should('not.exist');
 });
 
 Cypress.Commands.add('checkSentimentPage', (symbol: string) => {
@@ -41,14 +45,22 @@ Cypress.Commands.add('checkSentimentPage', (symbol: string) => {
 
   cy.url().should('include', `/sentiment/${symbol}`);
   cy.get(sentimentBackBtnSelector).should('exist');
-  cy.get('.spinner-border').should('not.exist');
+  getSpinner().should('not.exist');
+});
+
+Cypress.Commands.add('checkGoToSentimentPage', (symbol: string) => {
+  const gotToSentimentSelector = `#sentiment${symbol}`;
+  const removeSentimentSelector = `#remove${symbol}`;
+
+  cy.get(gotToSentimentSelector).should('exist');
+  cy.get(removeSentimentSelector).should('exist');
 });
 
 Cypress.Commands.add('check404Page', () => {
   cy.url().should('include', '/404');
-  cy.get('.spinner-border').should('not.exist');
+  getSpinner().should('not.exist');
 });
 
 Cypress.Commands.add('checkSpinner', () => {
-  cy.get('.spinner-border').should('exist');
+  getSpinner().should('exist');
 });

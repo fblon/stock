@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, Subject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { Stock } from './stock';
 import { StockTrackerStorageService } from './stock-tracker-storage.service';
@@ -14,7 +14,7 @@ import { StockService } from './stock.service';
 export class StockTrackerComponent implements OnInit {
   stocks: Observable<Stock[]> = EMPTY;
 
-  private refreshToken = new BehaviorSubject({});
+  private refreshToken = new Subject();
 
   constructor(
     private route: ActivatedRoute,
