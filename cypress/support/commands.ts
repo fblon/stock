@@ -30,7 +30,7 @@ function getSpinner(): Cypress.Chainable<JQuery<HTMLElement>> {
   return cy.get('.spinner-border');
 }
 
-Cypress.Commands.add('checkStockTrackerPage', () => {
+Cypress.Commands.add('checkEmptyStockTrackerPage', () => {
   const stockInputSelector = Cypress.env('stockInputSelector');
   const trackButtonSelector = Cypress.env('trackButtonSelector');
 

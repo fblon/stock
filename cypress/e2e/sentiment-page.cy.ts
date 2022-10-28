@@ -7,7 +7,7 @@ describe('Sentiment Page', () => {
   it('when sentiment url WITHOUT a symbol is provided should navigate to default page', () => {
     cy.visit('/sentiment');
 
-    cy.checkStockTrackerPage();
+    cy.checkEmptyStockTrackerPage();
   });
 
   it('when sentiment url with existing symbol is provided should navigate to sentiment page', () => {

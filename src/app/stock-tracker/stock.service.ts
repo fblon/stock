@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, forkJoin, Observable, of } from 'rxjs';
-import { defaultIfEmpty, map, startWith } from 'rxjs/operators';
+import { defaultIfEmpty, filter, map, startWith } from 'rxjs/operators';
 import { FinnhubService } from '../core/finnhub.service';
 import { Stock } from './stock';
 
@@ -40,7 +40,10 @@ export class StockService {
 
     return forkJoin(
       symbols.map(s => this.getStock(s)
-        .pipe(map(o => <Stock>o))));
+        .pipe(
+          filter(s => s != null),
+          map(o => <Stock>o))))
+      .pipe(defaultIfEmpty([]));
   }
 
   getRealTimeStocks(symbols: string[]): Observable<Stock[]> {
