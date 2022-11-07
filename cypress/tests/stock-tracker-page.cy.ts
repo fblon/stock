@@ -47,9 +47,9 @@ describe('Stock Tracker Page', () => {
     cy.wait(['@aaplSearch', '@tslaSearch', '@googlSearch']);
     cy.wait(['@aaplQuote', '@tslaQuote', '@googlQuote']);
 
-    cy.checkGoToSentimentPage(aaplSymbol);
-    cy.checkGoToSentimentPage(tslaSymbol);
-    cy.checkGoToSentimentPage(googlSymbol);
+    cy.checkStockOnStockTrackerPage(aaplSymbol);
+    cy.checkStockOnStockTrackerPage(tslaSymbol);
+    cy.checkStockOnStockTrackerPage(googlSymbol);
 
     cy.get('@aaplQuote.all').should('have.length', 1);
     cy.get('@tslaQuote.all').should('have.length', 1);
@@ -70,5 +70,43 @@ describe('Stock Tracker Page', () => {
     cy.visit('/');
 
     cy.checkEmptyStockTrackerPage();
-  });  
+  });
+
+  it('when search call is not authorized should not display symbol', () => {
+    const aaplSymbol = 'AAPL';
+    const jsonStorage = JSON.stringify([aaplSymbol]);
+    localStorage.setItem('stockSymbols', jsonStorage);
+
+    const aaplSearchUrl = getSearchUrl(aaplSymbol);
+    const aaplQuoteUrl = getQuoteUrl(aaplSymbol);
+
+    cy.intercept('GET', aaplSearchUrl, req => { req.reply({ statusCode: 401, body: '{"error":"Invalid API key"}' }); }).as('aaplSearch');
+
+    cy.intercept('GET', aaplQuoteUrl, req => { req.reply({ statusCode: 200, fixture: 'aapl-quote.json' }); }).as('aaplQuote');
+
+    cy.visit('/');
+
+    cy.wait(['@aaplSearch']);
+
+    cy.checkEmptyStockTrackerPage();
+  });
+
+  it('when quote call is not authorized should display stock with empty quote', () => {
+    const aaplSymbol = 'AAPL';
+    const jsonStorage = JSON.stringify([aaplSymbol]);
+    localStorage.setItem('stockSymbols', jsonStorage);
+
+    const aaplSearchUrl = getSearchUrl(aaplSymbol);
+    const aaplQuoteUrl = getQuoteUrl(aaplSymbol);
+
+    cy.intercept('GET', aaplSearchUrl, req => { req.reply({ statusCode: 200, fixture: 'aapl-search.json' }); }).as('aaplSearch');
+
+    cy.intercept('GET', aaplQuoteUrl, req => { req.reply({ statusCode: 401, body: '{"error":"Invalid API key"}' }); }).as('aaplQuote');
+
+    cy.visit('/');
+
+    cy.wait(['@aaplQuote']);
+
+    cy.checkStockOnStockTrackerPage(aaplSymbol);
+  });
 });

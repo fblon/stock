@@ -4,7 +4,7 @@ import { Stock } from '../stock';
 @Component({
   selector: 'app-stock-list',
   template: `
-    <ul class="list-group">
+    <ul *ngIf="stocks.length > 0" class="list-group" data-cy='stock-list'>
       <li class="container border list-group-item" *ngFor="let stock of stocks">
         <app-stock-summary [stock]="stock" (deleteStockEvent)="deleteStock(stock)"></app-stock-summary>
       </li>

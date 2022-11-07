@@ -35,7 +35,7 @@ describe('End To End tests', () => {
 
     cy.wait(['@search', '@quote']);
 
-    cy.checkGoToSentimentPage(symbol);
+    cy.checkStockOnStockTrackerPage(symbol);
 
     cy.log('-----------------------------------------');
     cy.log('Go to sentiment page');
@@ -55,7 +55,7 @@ describe('End To End tests', () => {
 
     cy.getSentimentBackBtn().click();
 
-    cy.checkGoToSentimentPage(symbol);
+    cy.checkStockOnStockTrackerPage(symbol);
 
     cy.log('-----------------------------------------');
     cy.log('Delete stock');

@@ -44,6 +44,7 @@ Cypress.Commands.add('checkEmptyStockTrackerPage', () => {
   cy.getStockInput().should('exist');
   cy.getTrackButton().should('exist');
   cy.getSpinner().should('not.exist');
+  cy.get('[data-cy="stock-list"]').should('not.exist');
 });
 
 Cypress.Commands.add('checkSentimentPage', (symbol: string) => {
@@ -53,7 +54,7 @@ Cypress.Commands.add('checkSentimentPage', (symbol: string) => {
   cy.getSpinner().should('not.exist');
 });
 
-Cypress.Commands.add('checkGoToSentimentPage', (symbol: string) => {
+Cypress.Commands.add('checkStockOnStockTrackerPage', (symbol: string) => {
 
   cy.getGoToSentiment(symbol).should('exist');
   cy.getRemoveSentiment(symbol).should('exist');

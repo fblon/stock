@@ -11,7 +11,7 @@ declare global {
       getRemoveSentiment(symbol: string): Cypress.Chainable<JQuery<HTMLElement>>;
 
       checkEmptyStockTrackerPage(): void;
-      checkGoToSentimentPage(symbol: string): void;
+      checkStockOnStockTrackerPage(symbol: string): void;
       checkSentimentPage(symbol: string): void;
       check404Page(): void;
       checkSpinner(): void;
