@@ -11,6 +11,7 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:4200/',
     specPattern: "cypress/tests/**/*.cy.ts",
+    requestTimeout: 15000, // first test is slow in run mode, don't know why :(
     setupNodeEvents(on, config) {
       if (config.isTextTerminal) {
         // skip the all.cy.js spec in "cypress run" mode

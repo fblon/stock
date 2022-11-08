@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
-import { defaultIfEmpty, map } from 'rxjs/operators';
+import { EMPTY, forkJoin, Observable, of } from 'rxjs';
+import { catchError, defaultIfEmpty, map } from 'rxjs/operators';
 import { FinnhubService, MonthInsiderSentiment } from '../core/finnhub.service';
 import { MonthSentiment, SentimentDetails } from './sentiment-details';
 
@@ -18,8 +18,8 @@ export class SentimentDetailsService {
     const threeMonthsAgo = this.getDate(3);
 
     return forkJoin({
-      description: this.finnhubService.getDescription(symbol),
-      sentiments: this.finnhubService.getSentiments(symbol, threeMonthsAgo, today)
+      description: this.finnhubService.getDescription(symbol).pipe(catchError(() => EMPTY)),
+      sentiments: this.finnhubService.getSentiments(symbol, threeMonthsAgo, today).pipe(catchError(() => of([])))
     })
       .pipe(
         map(o => {

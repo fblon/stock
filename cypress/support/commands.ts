@@ -49,7 +49,7 @@ Cypress.Commands.add('checkEmptyStockTrackerPage', () => {
 
 Cypress.Commands.add('checkSentimentPage', (symbol: string) => {
 
-  cy.url().should('include', `/sentiment/${symbol}`);
+  cy.url().should('include', `/sentiment/${symbol.toUpperCase()}`);
   cy.getSentimentBackBtn().should('exist');
   cy.getSpinner().should('not.exist');
 });

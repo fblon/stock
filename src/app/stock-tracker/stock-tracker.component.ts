@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EMPTY, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
 import { Stock } from './stock';
 import { StockTrackerStorageService } from './stock-tracker-storage.service';
@@ -12,7 +12,7 @@ import { StockService } from './stock.service';
     <app-stock-list *ngIf="(stocks | async) as asyncStocks" [stocks]="asyncStocks" (deleteStockEvent)="deleteStock($event)"></app-stock-list>`
 })
 export class StockTrackerComponent implements OnInit {
-  stocks: Observable<Stock[]> = EMPTY;
+  stocks!: Observable<Stock[]>;
 
   private refreshToken = new Subject();
 
