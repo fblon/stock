@@ -16,16 +16,11 @@
         ],
         "createDefaultProgram": true
       },
-      "plugins": ["jasmine"],
-      "env": {
-        "jasmine": true
-      },
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:jasmine/recommended"
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "@typescript-eslint/member-ordering": "error",
