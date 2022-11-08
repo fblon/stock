@@ -1,33 +1,28 @@
-# Stock
+# Stock Tracker Project
+## Startup
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
+`npm install`\
+`npm start`
 
-## Development server
+http://localhost:4200/
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Tests
 
-## Code scaffolding
+`npm run cypress:headless`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Sanity
 
-## Build
+`npm run lint`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Deployment
 
-## Running unit tests
+`npm run buildPages`\
+`git add .`\
+`git commit -am 'update git pages'`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Site automatically deployed by github and accessible at: https://fblon.github.io/stock-tracker/
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
-# TODO
-- Implement error handling
-- Unit tests
-- Cypress
-- json-server
+## TODO
+- Bootstrap styling
+- Implement error handling (web socket)
+- json-server + fake web socket
