@@ -12,6 +12,7 @@ http://localhost:4200/
 
 ## Sanity
 
+`npm audit --production`
 `npm run lint`
 
 ## Deployment
