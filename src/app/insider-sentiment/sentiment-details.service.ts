@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { EMPTY, forkJoin, Observable, of } from 'rxjs';
-import { catchError, defaultIfEmpty, map } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { FinnhubService, MonthInsiderSentiment } from '../core/finnhub.service';
 import { MonthSentiment, SentimentDetails } from './sentiment-details';
 
@@ -17,21 +17,24 @@ export class SentimentDetailsService {
     const twoMonthsAgo = this.getDate(2);
     const threeMonthsAgo = this.getDate(3);
 
-    return forkJoin({
-      description: this.finnhubService.getDescription(symbol).pipe(catchError(() => EMPTY)),
-      sentiments: this.finnhubService.getSentiments(symbol, threeMonthsAgo, today).pipe(catchError(() => of([])))
-    })
+    return forkJoin([
+      this.finnhubService.getDescription(symbol).pipe(catchError(() => of(undefined))),
+      this.finnhubService.getSentiments(symbol, threeMonthsAgo, today).pipe(catchError(() => of([])))
+    ])
       .pipe(
-        map(o => {
+        map(([description, sentiments]) => {
+          if (!description) {
+            return undefined;
+          }
+
           return {
             symbol: symbol,
-            description: o.description,
-            currentMonthSentiment: this.getMonthSentiment(today, o.sentiments),
-            oneMonthAgoSentiment: this.getMonthSentiment(oneMonthAgo, o.sentiments),
-            twoMonthsAgoSentiment: this.getMonthSentiment(twoMonthsAgo, o.sentiments)
+            description: description,
+            currentMonthSentiment: this.getMonthSentiment(today, sentiments),
+            oneMonthAgoSentiment: this.getMonthSentiment(oneMonthAgo, sentiments),
+            twoMonthsAgoSentiment: this.getMonthSentiment(twoMonthsAgo, sentiments)
           };
-        }),
-        defaultIfEmpty(undefined)
+        })
       );
   }
 

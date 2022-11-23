@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Stock } from '../stock';
 
 @Component({
@@ -9,7 +9,8 @@ import { Stock } from '../stock';
         <app-stock-summary [stock]="stock" (deleteStockEvent)="deleteStock(stock)"></app-stock-summary>
       </li>
     </ul>  
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StockListComponent {
   @Input() stocks!: Stock[];

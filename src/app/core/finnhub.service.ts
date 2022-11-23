@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { concatMap, filter, map, pairwise, tap } from 'rxjs/operators';
+import { concatMap, defaultIfEmpty, filter, map, pairwise, tap } from 'rxjs/operators';
 import { webSocket } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
 
@@ -50,7 +50,7 @@ export class FinnhubService implements OnDestroy {
   private socket = webSocket<TradeEvent>(this.webSocketUrl);
   private userTradesUpdateToken = new BehaviorSubject<string[]>([]);
 
-  private descriptionCache = new Map<string, string>();
+  private descriptionCache = new Map<string, string | undefined>();
 
   constructor(private http: HttpClient) {
     // open connection
@@ -84,7 +84,7 @@ export class FinnhubService implements OnDestroy {
     this.socket.complete();
   }
 
-  getDescription(symbol: string): Observable<string> {
+  getDescription(symbol: string): Observable<string | undefined> {
     const url = `${environment.finnhubBaseUrl}/${this.apiRoutes.symbolSearch}`;
     let params: HttpParams = this.makeHttpParams();
     params = params.set('q', symbol);
@@ -98,8 +98,9 @@ export class FinnhubService implements OnDestroy {
         map(o => o.result),
         concatMap(x => x),
         filter(o => o.symbol === symbol),
-        tap(o => this.descriptionCache.set(symbol, o.description)),
-        map(o => o.description));
+        defaultIfEmpty(undefined),
+        tap(o => this.descriptionCache.set(symbol, o?.description)),
+        map(o => o?.description));
   }
 
   getQuote(symbol: string): Observable<Quote> {

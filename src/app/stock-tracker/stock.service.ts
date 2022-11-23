@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, EMPTY, forkJoin, Observable, of } from 'rxjs';
-import { catchError, defaultIfEmpty, filter, map, startWith } from 'rxjs/operators';
+import { combineLatest, forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, startWith } from 'rxjs/operators';
 import { FinnhubService } from '../core/finnhub.service';
 import { Stock } from './stock';
 
@@ -13,31 +13,35 @@ export class StockService {
 
   getStock(symbol: string): Observable<Stock | undefined> {
 
-    return forkJoin({
-      description: this.finnhubService.getDescription(symbol).pipe(catchError(() => EMPTY)),
-      quote: this.finnhubService.getQuote(symbol).pipe(catchError(() => of(
-        {
-          c: Number.NaN,
-          o: Number.NaN,
-          h: Number.NaN,
-          dp: Number.NaN
-        }
-      )))
-    })
+    return forkJoin([
+      this.finnhubService.getDescription(symbol).pipe(catchError(() => of(undefined))),
+      this.finnhubService.getQuote(symbol).pipe(
+        catchError(() => of(
+          {
+            c: Number.NaN,
+            o: Number.NaN,
+            h: Number.NaN,
+            dp: Number.NaN
+          }
+        )))
+    ])
       .pipe(
-        map(o => {
+        map(([description, quote]) => {
+          if (!description) {
+            return undefined;
+          }
+
           const stock: Stock = {
             symbol: symbol,
-            description: o.description,
-            currentPrice: o.quote.c,
-            openingPriceOfTheDay: o.quote.o,
-            highPriceOfTheDay: o.quote.h,
-            percentChange: (o.quote.dp / 100),
+            description: description,
+            currentPrice: quote.c,
+            openingPriceOfTheDay: quote.o,
+            highPriceOfTheDay: quote.h,
+            percentChange: (quote.dp / 100),
           };
 
           return stock;
-        }),
-        defaultIfEmpty(undefined));
+        }));
   }
 
   getStocks(symbols: string[]): Observable<Stock[]> {
@@ -45,12 +49,9 @@ export class StockService {
       return of([]);
     }
 
-    return forkJoin(
-      symbols.map(s => this.getStock(s)
-        .pipe(
-          filter(s => s != null),
-          map(o => <Stock>o))))
-      .pipe(defaultIfEmpty([]));
+    return forkJoin(symbols.map(s => this.getStock(s)))
+      .pipe(
+        map(stocks => stocks.filter(s => s != null).map(s => s as Stock)));
   }
 
   getRealTimeStocks(symbols: string[]): Observable<Stock[]> {

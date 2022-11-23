@@ -8,7 +8,7 @@ describe('End To End tests', () => {
     localStorage.clear();
   });
 
-  it('Full interactions set with a one stock', () => {
+  it('Full interactions set with one stock', () => {
 
     cy.log('-----------------------------------------');
     cy.log('Load stock tracker page');
