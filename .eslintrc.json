@@ -28,6 +28,8 @@
         "quotes": ["error", "single"],
         "semi": "error",
         "@typescript-eslint/no-non-null-assertion": "error",
+        "prefer-const": "error",
+        "no-var": "error",
         "@angular-eslint/directive-selector": [
           "error",
           {
